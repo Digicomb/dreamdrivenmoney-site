@@ -1,0 +1,20 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.svg';
+---
+
+<header class="site-header">
+	<div class="container">
+		<a class="brand" href="/">
+			<Image src={logo} alt="" width={38} height={38} />
+			Dream Driven Money
+		</a>
+		<nav class="nav" aria-label="Main">
+			<a href="/#approach">Approach</a>
+			<a href="/#coaching">Coaching</a>
+			<a href="/#about">About Jennifer</a>
+			<a href="/#faq">FAQ</a>
+			<a class="btn btn-primary" href="/#contact"><span class="nav-long">Book a </span>free call</a>
+		</nav>
+	</div>
+</header>

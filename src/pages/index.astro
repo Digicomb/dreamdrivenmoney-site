@@ -1,0 +1,335 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Landscape from '../components/Landscape.astro';
+import ContactForm from '../components/ContactForm.astro';
+
+const pillars = [
+	{
+		title: 'Understand your money story',
+		body: 'The way you spend, save and avoid was shaped long before your first paycheck. Seeing those patterns clearly, without shame, is where change begins.',
+		icon: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM16 8l-2.5 5.5L8 16l2.5-5.5Z',
+	},
+	{
+		title: 'Align money with what you love',
+		body: 'Name the dreams that matter most to you, then give your money a job that moves you toward them instead of away from them.',
+		icon: 'M3 20l6-10 4 6 3-4 5 8ZM9 10V4l5 2-5 2',
+	},
+	{
+		title: 'Build habits that last',
+		body: 'Small, doable steps and a coach in your corner turn good intentions into routines that hold up when life gets busy.',
+		icon: 'M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6ZM12 15c0-3-2.5-5-6-5 0 3 2.5 5 6 5Z',
+	},
+];
+
+const services = [
+	{
+		title: 'Personal Coaching',
+		for: 'For individuals',
+		body: 'One-on-one sessions to untangle your relationship with money, build a spending plan that feels like freedom, and make steady progress on debt, savings and the goals you care about.',
+		icon: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 16 0',
+	},
+	{
+		title: 'Couples Coaching',
+		for: 'For partners',
+		body: 'Trade money arguments for money conversations. Understand each other’s money stories, agree on shared dreams, and build a plan you both believe in.',
+		icon: 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z',
+	},
+	{
+		title: 'Small Business Coaching',
+		for: 'For owners and solopreneurs',
+		body: 'Separate business and personal money, find a rhythm for cash flow, pay yourself consistently, and make decisions from clarity instead of worry.',
+		icon: 'M3 8h18v12H3zM8 8V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3M3 13h18',
+	},
+	{
+		title: 'Workshops & Groups',
+		for: 'For churches, employers and communities',
+		body: 'Encouraging, practical sessions on money mindset, spending plans and dreaming well, tailored to your group and easy to put into practice.',
+		icon: 'M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2 20a7 7 0 0 1 14 0M16 4.5a3.5 3.5 0 0 1 0 6.5M18 13.5a7 7 0 0 1 4 6.5',
+	},
+];
+
+const familiar = [
+	'“I make decent money, but I have no idea where it all goes.”',
+	'“We love each other. We just can’t talk about money without fighting.”',
+	'“I avoid opening my bank app because I’m afraid of what I’ll see.”',
+	'“My business is busy, but I never seem to pay myself.”',
+	'“I have dreams. I just can’t see how we’ll ever afford them.”',
+];
+
+const stages = [
+	{
+		label: 'Base camp',
+		title: 'Free discovery call',
+		body: 'A relaxed, no-pressure conversation about where you are, where you’d like to be, and whether coaching is a good fit.',
+		items: ['About 30 minutes', 'No preparation needed', 'No sales pitch'],
+	},
+	{
+		label: 'Map the route',
+		title: 'Your money story and dreams',
+		body: 'We explore your history with money, name what you value most, and paint a clear picture of the life you’re working toward.',
+		items: ['Money story and patterns', 'Values and priorities', 'A vision worth saving for'],
+	},
+	{
+		label: 'The climb',
+		title: 'Coaching sessions',
+		body: 'Regular sessions to build a spending plan you’ll actually use, practice new habits, and work through obstacles as they come up.',
+		items: ['A plan that fits real life', 'Simple, steady habits', 'Encouragement and accountability'],
+	},
+	{
+		label: 'The view',
+		title: 'Confidence that lasts',
+		body: 'You leave with the tools, rhythms and confidence to keep going on your own, and the freedom to dream bigger.',
+		items: ['Calm, consistent money routines', 'Shared language for couples', 'Room to do what you love'],
+	},
+];
+
+const faqs = [
+	{
+		q: 'Is financial coaching the same as financial advice?',
+		a: 'No. Coaching focuses on your habits, mindset, spending plan and goals. Jennifer doesn’t sell investments, insurance or other financial products, and doesn’t give investment, tax or legal advice. If you need those services, she can help you figure out what kind of professional to look for.',
+	},
+	{
+		q: 'Do I need to be good with numbers?',
+		a: 'Not at all. This work is much more about behavior and relationship than math. If you can add and subtract (or use a calculator), you have all the number skills you need.',
+	},
+	{
+		q: 'I’m embarrassed about where I am. Will I be judged?',
+		a: 'Never. Everyone has a money story, and most of us picked up our habits without anyone teaching us. Sessions are a judgment-free space to be honest about where you are and hopeful about where you’re going.',
+	},
+	{
+		q: 'Do we both need to come to couples sessions?',
+		a: 'Ideally, yes, since the goal is to get on the same page together. If your partner isn’t ready yet, you can start on your own and invite them in later.',
+	},
+	{
+		q: 'How do sessions work?',
+		a: 'Sessions are held over video, so you can meet with Jennifer from anywhere. Most clients meet regularly for a few months; on your discovery call you’ll talk through what pace makes sense for you.',
+	},
+	{
+		q: 'What does coaching cost?',
+		a: 'It depends on the type of coaching and how often you meet. Jennifer will walk you through options on your free discovery call so you can choose what fits, with no obligation.',
+	},
+];
+
+const iconProps = {
+	width: 24,
+	height: 24,
+	viewBox: '0 0 24 24',
+	fill: 'none',
+	stroke: 'currentColor',
+	'stroke-width': 1.8,
+	'stroke-linecap': 'round',
+	'stroke-linejoin': 'round',
+};
+---
+
+<Base
+	title="Dream Driven Money | Financial coaching with Jennifer Orr"
+	description="Personal, couples and small business financial coaching with Jennifer Orr. Build a healthier relationship with money so you can dream and do the things you love."
+>
+	<SiteHeader />
+
+	<main>
+		<section class="hero">
+			<div class="container hero-body">
+				<span class="eyebrow">Personal &amp; small business financial coaching</span>
+				<h1>Make peace with your money. <em>Make room for your dreams.</em></h1>
+				<p>
+					Money isn’t really about numbers. It’s about habits, feelings and the life you want to live. Jennifer Orr
+					helps individuals, couples and business owners build a healthier relationship with money, so it carries
+					you toward the things you love.
+				</p>
+				<div class="hero-actions">
+					<a class="btn btn-primary" href="#contact">Book a free discovery call</a>
+					<a class="btn btn-ghost" href="#approach">How coaching works</a>
+				</div>
+			</div>
+			<Landscape />
+		</section>
+
+		<section class="section" id="approach">
+			<div class="container">
+				<div class="section-head">
+					<span class="eyebrow">The approach</span>
+					<h2>It’s not about the spreadsheet</h2>
+					<p class="lead">
+						Most people already know they “should” spend less and save more. What’s hard is the why and the how.
+						Dream Driven Money coaching starts with you, not your accounts.
+					</p>
+				</div>
+				<div class="pillars">
+					{
+						pillars.map((p) => (
+							<div class="pillar">
+								<div class="icon-badge" aria-hidden="true">
+									<svg {...iconProps}>
+										<path d={p.icon} />
+									</svg>
+								</div>
+								<h3>{p.title}</h3>
+								<p>{p.body}</p>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section class="section section-soft">
+			<div class="container familiar">
+				<div>
+					<span class="eyebrow">Sound familiar?</span>
+					<h2>You’re not bad with money. You just haven’t had a guide.</h2>
+					<p class="lead">
+						Stress, avoidance and conflict around money are incredibly common, and they’re not a character flaw.
+						With the right support, they can change.
+					</p>
+				</div>
+				<ul class="quotes" role="list">
+					{familiar.map((q) => <li>{q}</li>)}
+				</ul>
+			</div>
+		</section>
+
+		<section class="section" id="coaching">
+			<div class="container">
+				<div class="section-head">
+					<span class="eyebrow">Coaching</span>
+					<h2>Support for every season of life and work</h2>
+					<p class="lead">
+						Whether you’re on your own, building a life with someone, or running a business, coaching meets you
+						where you are.
+					</p>
+				</div>
+				<div class="cards">
+					{
+						services.map((s) => (
+							<div class="card">
+								<div class="icon-badge" aria-hidden="true">
+									<svg {...iconProps}>
+										<path d={s.icon} />
+									</svg>
+								</div>
+								<h3>{s.title}</h3>
+								<span class="card-for">{s.for}</span>
+								<p>{s.body}</p>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section class="section section-soft" id="how">
+			<div class="container">
+				<div class="section-head">
+					<span class="eyebrow">How it works</span>
+					<h2>From base camp to the summit</h2>
+					<p class="lead">A simple, steady path. You set the destination; Jennifer helps you find the route.</p>
+				</div>
+				<ol class="stages" role="list">
+					{
+						stages.map((s, i) => (
+							<li class="stage">
+								<span class="stage-num">
+									Step {i + 1} &middot; {s.label}
+								</span>
+								<h3>{s.title}</h3>
+								<p>{s.body}</p>
+								<ul>
+									{s.items.map((item) => (
+										<li>{item}</li>
+									))}
+								</ul>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+		</section>
+
+		<section class="section" id="about">
+			<div class="container about">
+				<div class="portrait">
+					{/* Photo placeholder: replace this SVG with <Image src={jenniferPhoto} alt="Jennifer Orr" /> */}
+					<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+						<circle cx="270" cy="190" r="48" fill="#efb661" />
+						<path d="M0 380L110 230L170 300L250 200L400 360V500H0Z" fill="#c5d6df" />
+						<path d="M110 230L140 271L128 266L116 278L104 265L88 260Z" fill="#fff" />
+						<path d="M250 200L290 251L276 246L262 258L248 244L232 248L222 237Z" fill="#fff" />
+						<path d="M0 420C90 380 170 370 260 400C320 420 360 410 400 400V500H0Z" fill="#a9c2b3" />
+						<path d="M0 460C120 440 260 445 400 450V500H0Z" fill="#3d7a7c" />
+					</svg>
+				</div>
+				<div>
+					<span class="eyebrow">Meet your coach</span>
+					<h2>Hi, I’m Jennifer.</h2>
+					<p class="about-role">Founder &amp; financial coach, Dream Driven Money</p>
+					<p>
+						I believe money is a tool for living well, not a scoreboard. Yet for so many people it’s a constant
+						source of stress, guilt or tension at home. Usually the problem isn’t a lack of information. It’s the
+						habits, beliefs and emotions we carry about money, often without realizing it.
+					</p>
+					<p>
+						That’s why my coaching focuses on behavior and relationship rather than investments and formulas. I’ll
+						help you understand your patterns, get clear on what you really want, and build simple habits that
+						move you toward it, with plenty of encouragement along the way.
+					</p>
+					<p>
+						My goal is for you to feel calm and confident with your money, so you have the freedom to dream big
+						and actually do the things you love.
+					</p>
+					<p class="signature">— Jennifer Orr</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" style="padding-top: 0">
+			<div class="container">
+				<div class="banner">
+					<div class="banner-body">
+						<blockquote>Your money should carry you toward your dreams, not keep you from them.</blockquote>
+						<p>
+							When your spending reflects what you value, budgeting stops feeling like restriction and starts feeling
+							like freedom.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section section-soft" id="faq">
+			<div class="container">
+				<div class="section-head">
+					<span class="eyebrow">Questions</span>
+					<h2>Frequently asked questions</h2>
+				</div>
+				<div class="faq">
+					{
+						faqs.map((f) => (
+							<details>
+								<summary>{f.q}</summary>
+								<p>{f.a}</p>
+							</details>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section class="section cta" id="contact">
+			<div class="container">
+				<span class="eyebrow">Get started</span>
+				<h2>Book your free discovery call</h2>
+				<p class="lead">
+					Tell Jennifer a little about where you are and what you’re hoping for. She’ll reach out to find a time for
+					a relaxed, no-pressure conversation.
+				</p>
+				<ContactForm />
+			</div>
+		</section>
+	</main>
+
+	<SiteFooter />
+</Base>

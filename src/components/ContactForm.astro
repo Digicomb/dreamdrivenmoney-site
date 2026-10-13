@@ -1,0 +1,129 @@
+---
+const interests = [
+	'Personal coaching',
+	'Couples coaching',
+	'Small business coaching',
+	'Workshop or group program',
+	'Not sure yet',
+];
+---
+
+<form class="contact-form" id="contact-form" novalidate>
+	<div class="field-row">
+		<div class="field">
+			<label for="cf-name">Name <span aria-hidden="true">*</span></label>
+			<input id="cf-name" name="name" type="text" autocomplete="name" maxlength="120" required />
+		</div>
+		<div class="field">
+			<label for="cf-email">Email <span aria-hidden="true">*</span></label>
+			<input id="cf-email" name="email" type="email" autocomplete="email" maxlength="254" required />
+		</div>
+	</div>
+	<div class="field-row">
+		<div class="field">
+			<label for="cf-phone">Phone</label>
+			<input id="cf-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" />
+		</div>
+		<div class="field">
+			<label for="cf-interest">I'm interested in</label>
+			<select id="cf-interest" name="interest">
+				<option value="">Choose one</option>
+				{interests.map((i) => <option value={i}>{i}</option>)}
+			</select>
+		</div>
+	</div>
+	<div class="field">
+		<label for="cf-message">What's on your mind? <span aria-hidden="true">*</span></label>
+		<textarea
+			id="cf-message"
+			name="message"
+			rows="5"
+			maxlength="4000"
+			required
+			placeholder="A sentence or two is plenty: what you'd like to change, or what you're dreaming about."
+		></textarea>
+	</div>
+
+	<!-- Spam trap: hidden from people, often filled in by bots. -->
+	<div class="hp" aria-hidden="true">
+		<label for="cf-website">Website</label>
+		<input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+	</div>
+
+	<button class="btn btn-primary" type="submit">Request my free discovery call</button>
+	<p class="form-consent">
+		Your information is only used to reply to you. See our <a href="/privacy/">privacy policy</a>.
+	</p>
+	<p class="form-status" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+	import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '../config';
+
+	const form = document.getElementById('contact-form') as HTMLFormElement;
+	const status = form.querySelector('.form-status') as HTMLParagraphElement;
+	const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+	const thanks = "Thank you! Jennifer will be in touch soon to find a time to talk.";
+
+	const setStatus = (message: string, kind: 'error' | 'success' | '') => {
+		status.textContent = message;
+		status.dataset.kind = kind;
+	};
+
+	form.addEventListener('submit', async (event) => {
+		event.preventDefault();
+		const data = new FormData(form);
+		const value = (key: string) => String(data.get(key) ?? '').trim();
+
+		// Bots fill the hidden field; pretend it worked and drop it.
+		if (value('website')) {
+			form.reset();
+			setStatus(thanks, 'success');
+			return;
+		}
+
+		for (const name of ['name', 'email', 'message']) {
+			const input = form.elements.namedItem(name) as HTMLInputElement;
+			if (!value(name) || !input.checkValidity()) {
+				const label = form.querySelector(`label[for="${input.id}"]`)?.firstChild?.textContent?.trim();
+				setStatus(name === 'email' ? 'Please enter a valid email address.' : `Please fill in "${label}".`, 'error');
+				input.focus();
+				return;
+			}
+		}
+
+		button.disabled = true;
+		setStatus('Sending…', '');
+
+		try {
+			const response = await fetch(`${SUPABASE_URL}/rest/v1/ddm_contact_requests`, {
+				method: 'POST',
+				headers: {
+					apikey: SUPABASE_PUBLISHABLE_KEY,
+					'Content-Type': 'application/json',
+					Prefer: 'return=minimal',
+				},
+				body: JSON.stringify({
+					name: value('name'),
+					email: value('email'),
+					phone: value('phone') || null,
+					interest: value('interest') || null,
+					message: value('message'),
+					source: 'homepage',
+				}),
+			});
+
+			if (!response.ok) {
+				throw new Error(`Contact request failed: ${response.status}`);
+			}
+
+			form.reset();
+			setStatus(thanks, 'success');
+		} catch (error) {
+			console.error(error);
+			setStatus('Something went wrong sending your request. Please try again in a moment.', 'error');
+		} finally {
+			button.disabled = false;
+		}
+	});
+</script>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dreamdrivenmoney.com/sitemap-index.xml
