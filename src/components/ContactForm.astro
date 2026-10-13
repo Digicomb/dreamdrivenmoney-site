@@ -60,6 +60,12 @@ const interests = [
 <script>
 	import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '../config';
 
+	declare global {
+		interface Window {
+			gtag?: (...args: unknown[]) => void;
+		}
+	}
+
 	const form = document.getElementById('contact-form') as HTMLFormElement;
 	const status = form.querySelector('.form-status') as HTMLParagraphElement;
 	const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
@@ -119,6 +125,7 @@ const interests = [
 
 			form.reset();
 			setStatus(thanks, 'success');
+			window.gtag?.('event', 'generate_lead', { form: 'discovery_call' });
 		} catch (error) {
 			console.error(error);
 			setStatus('Something went wrong sending your request. Please try again in a moment.', 'error');

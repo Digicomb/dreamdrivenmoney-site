@@ -9,6 +9,10 @@ interface Props {
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
+// Google Analytics 4. Only loaded on production builds so local previews aren't tracked.
+const gaId = 'G-SMRGXX2C2W';
+const loadAnalytics = import.meta.env.PROD;
+
 const organization = {
 	'@context': 'https://schema.org',
 	'@type': 'ProfessionalService',
@@ -43,6 +47,22 @@ const organization = {
 		<meta property="og:locale" content="en_US" />
 
 		<script type="application/ld+json" set:html={JSON.stringify(organization)} />
+
+		{
+			loadAnalytics && (
+				<>
+					<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+					<script is:inline define:vars={{ gaId }}>
+						window.dataLayer = window.dataLayer || [];
+						window.gtag = function () {
+							dataLayer.push(arguments);
+						};
+						gtag('js', new Date());
+						gtag('config', gaId);
+					</script>
+				</>
+			)
+		}
 	</head>
 	<body>
 		<slot />
