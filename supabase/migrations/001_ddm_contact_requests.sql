@@ -56,7 +56,7 @@ create extension if not exists pg_net with schema extensions;
 -- To change a value later: Project Settings -> Vault, or
 --   select vault.update_secret((select id from vault.secrets where name = 'ddm_contact_notify_to'), 'new@example.com');
 --
--- select vault.create_secret('kelly.orr@gmail.com', 'ddm_contact_notify_to');
+-- select vault.create_secret('<inbox that should receive requests>', 'ddm_contact_notify_to');
 -- select vault.create_secret('Dream Driven Money <notifications@dreamdrivenmoney.com>', 'ddm_contact_notify_from');
 
 create or replace function public.notify_ddm_contact_request()
