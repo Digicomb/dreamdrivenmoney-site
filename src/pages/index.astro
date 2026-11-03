@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Landscape from '../components/Landscape.astro';
 import ContactForm from '../components/ContactForm.astro';
+import jenniferPhoto from '../assets/jennifer-orr.jpg';
 
 const pillars = [
 	{
@@ -252,15 +254,13 @@ const iconProps = {
 		<section class="section" id="about">
 			<div class="container about">
 				<div class="portrait">
-					{/* Photo placeholder: replace this SVG with <Image src={jenniferPhoto} alt="Jennifer Orr" /> */}
-					<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-						<circle cx="270" cy="190" r="48" fill="#efb661" />
-						<path d="M0 380L110 230L170 300L250 200L400 360V500H0Z" fill="#c5d6df" />
-						<path d="M110 230L140 271L128 266L116 278L104 265L88 260Z" fill="#fff" />
-						<path d="M250 200L290 251L276 246L262 258L248 244L232 248L222 237Z" fill="#fff" />
-						<path d="M0 420C90 380 170 370 260 400C320 420 360 410 400 400V500H0Z" fill="#a9c2b3" />
-						<path d="M0 460C120 440 260 445 400 450V500H0Z" fill="#3d7a7c" />
-					</svg>
+					<Image
+						src={jenniferPhoto}
+						alt="Jennifer Orr, founder of Dream Driven Money"
+						widths={[320, 480, 640, 960]}
+						sizes="(max-width: 860px) 320px, 420px"
+						loading="lazy"
+					/>
 				</div>
 				<div>
 					<span class="eyebrow">Meet your coach</span>
